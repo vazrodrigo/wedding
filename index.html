@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rodrigo & Graciela — 20 Anos de Amor</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A96E;
+    --gold-light: #E8D5A3;
+    --gold-dark: #8B6914;
+    --cream: #FAF6EE;
+    --deep: #1A1209;
+    --rose: #C4878A;
+    --rose-light: #F0D8D9;
+    --text: #2A1F0E;
+    --muted: #6B5B3E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--cream);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── PARTICLES / STARS ── */
+  #stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold-light);
+    animation: twinkle var(--d, 3s) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { from { opacity: .1; transform: scale(.7); } to { opacity: .6; transform: scale(1); } }
+
+  /* ── AUDIO PLAYER ── */
+  #audio-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: rgba(26,18,9,.8);
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: all .3s;
+  }
+  #audio-btn:hover { background: var(--gold); color: var(--deep); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,169,110,.12) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 20% 80%, rgba(196,135,138,.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 60% at 80% 10%, rgba(201,169,110,.07) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .ornament {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .9rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: .8;
+  }
+
+  .hero-date {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(.65rem, 1.5vw, .85rem);
+    letter-spacing: .5em;
+    color: var(--gold);
+    opacity: .7;
+    margin-bottom: 2rem;
+  }
+
+  .hero-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: .5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-names em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .ampersand {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    color: var(--rose);
+    display: block;
+    margin: -.3em 0;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    letter-spacing: .25em;
+    color: var(--gold);
+    margin: 2rem 0 .5rem;
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--gold-light);
+    opacity: .75;
+    margin-bottom: 3rem;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    width: min(400px, 80%);
+    color: var(--gold);
+    opacity: .5;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+    opacity: .5;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    color: var(--gold);
+    opacity: .4;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    animation: float 2s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+  .scroll-arrow { font-size: 1.2rem; }
+
+  /* ── VERSE SECTION ── */
+  .verse-section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+    text-align: center;
+    background: linear-gradient(to bottom, transparent, rgba(201,169,110,.04), transparent);
+  }
+  .verse-label {
+    font-family: 'Cinzel', serif;
+    font-size: .75rem;
+    letter-spacing: .5em;
+    color: var(--gold);
+    opacity: .6;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .verse-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
+    line-height: 1.8;
+    color: var(--cream);
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    opacity: .9;
+  }
+  .verse-ref {
+    font-family: 'Cinzel', serif;
+    font-size: .8rem;
+    letter-spacing: .3em;
+    color: var(--gold);
+    opacity: .6;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline-section {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 0 6rem;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    letter-spacing: .3em;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: .5rem;
+    text-transform: uppercase;
+  }
+  .section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold-light);
+    opacity: .6;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .year-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+    border: 1px solid rgba(201,169,110,.2);
+    transition: border-color .4s, transform .4s;
+    background: rgba(0,0,0,.3);
+  }
+  .year-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+  .year-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(.15) brightness(.85);
+    transition: transform .6s, filter .4s;
+  }
+  .year-card:hover img {
+    transform: scale(1.04);
+    filter: sepia(.05) brightness(.95);
+  }
+  .year-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,7,2,.9) 0%, rgba(10,7,2,.3) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+  }
+  .year-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: .25rem;
+    opacity: .9;
+  }
+  .year-label {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem;
+    letter-spacing: .4em;
+    color: var(--cream);
+    opacity: .7;
+    text-transform: uppercase;
+  }
+  .year-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: .9rem;
+    color: var(--gold-light);
+    opacity: 0;
+    margin-top: .75rem;
+    line-height: 1.5;
+    transition: opacity .4s;
+  }
+  .year-card:hover .year-verse { opacity: .85; }
+
+  /* ── COUNTER ── */
+  .counter-section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(201,169,110,.06), transparent 60%);
+  }
+  .counter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 3rem;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  .counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .counter-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 5rem);
+    color: var(--gold);
+    line-height: 1;
+  }
+  .counter-unit {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem;
+    letter-spacing: .4em;
+    color: var(--cream);
+    opacity: .5;
+    text-transform: uppercase;
+    margin-top: .3rem;
+  }
+
+  /* ── MESSAGE SECTION ── */
+  .message-section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .big-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--gold);
+    opacity: .3;
+    line-height: .5;
+    margin-bottom: 1rem;
+  }
+  .message-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    line-height: 1.9;
+    color: var(--cream);
+    opacity: .9;
+    margin-bottom: 2rem;
+  }
+
+  /* ── FINAL VERSE ── */
+  .final-section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem 8rem;
+    text-align: center;
+    border-top: 1px solid rgba(201,169,110,.15);
+  }
+
+  .gold-ornament {
+    color: var(--gold);
+    font-size: 1.5rem;
+    letter-spacing: .5rem;
+    opacity: .4;
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  .signature {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    color: var(--gold-light);
+    opacity: .8;
+    margin: 2rem 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid rgba(201,169,110,.1);
+    font-family: 'Cinzel', serif;
+    font-size: .65rem;
+    letter-spacing: .4em;
+    color: var(--gold);
+    opacity: .3;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MODAL ── */
+  #modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10,7,2,.95);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+  }
+  #modal.open { display: flex; }
+  #modal img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border: 1px solid rgba(201,169,110,.3);
+    border-radius: 2px;
+  }
+  #modal-year {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--gold);
+    opacity: .7;
+  }
+
+  @media (max-width: 600px) {
+    .timeline { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .year-number { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div id="stars"></div>
+
+<!-- Audio -->
+<button id="audio-btn" title="Música" onclick="toggleAudio()">♪</button>
+<audio id="bg-audio" loop>
+  <source src="https://raw.githubusercontent.com/vazrodrigo/wedding/main/song/music.mp3" type="audio/mp3">
+</audio>
+
+<!-- Modal -->
+<div id="modal" onclick="closeModal()">
+  <img id="modal-img" src="" alt="">
+  <div id="modal-year"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="ornament">✦ Bodas de Porcelana ✦</p>
+  <p class="hero-date">03 de Junho de 2006 · 03 de Junho de 2026</p>
+  <h1 class="hero-names">
+    <em>Rodrigo</em>
+    <span class="ampersand">&amp;</span>
+    <em>Graciela</em>
+  </h1>
+  <h2 class="hero-title">20 Anos de Amor</h2>
+  <p class="hero-sub">Uma história escrita pelo coração de Deus</p>
+  <div class="divider">✦</div>
+  <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--gold-light); opacity:.7; max-width:420px; line-height:1.8;">
+    "O amor é paciente, o amor é bondoso…<br>
+    tudo suporta, tudo crê, tudo espera, tudo persevera."
+  </p>
+  <p style="font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.4em; color:var(--gold); opacity:.5; margin-top:.75rem;">1 Coríntios 13:4-7</p>
+  <div class="scroll-hint">
+    <span>Descer</span>
+    <span class="scroll-arrow">↓</span>
+  </div>
+</section>
+
+<!-- VERSE 1 -->
+<section class="verse-section fade-up">
+  <p class="verse-label">Palavra de Deus</p>
+  <p class="verse-text">
+    "Portanto, o que Deus uniu,<br>não o separe o homem."
+  </p>
+  <p class="verse-ref">Mateus 19:6</p>
+</section>
+
+<!-- COUNTER -->
+<section class="counter-section fade-up">
+  <h3 class="section-title">Dois Tornaram-se Um</h3>
+  <p class="section-subtitle">Em números, em anos, em graça</p>
+  <div class="counter-grid">
+    <div class="counter-item">
+      <span class="counter-num" id="c-anos">0</span>
+      <span class="counter-unit">Anos</span>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" id="c-meses">0</span>
+      <span class="counter-unit">Meses</span>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" id="c-dias">0</span>
+      <span class="counter-unit">Dias</span>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" id="c-horas">0</span>
+      <span class="counter-unit">Horas</span>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <h3 class="section-title fade-up">Galeria de Memórias</h3>
+  <p class="section-subtitle fade-up">Cada foto, um capítulo. Cada ano, uma bênção.</p>
+  <div class="timeline" id="timeline-grid"></div>
+</section>
+
+<!-- VERSE 2 -->
+<section class="verse-section fade-up">
+  <p class="verse-label">Eclesiastes 4:12</p>
+  <p class="verse-text">
+    "E se alguém puder vencer um,<br>
+    dois resistirão contra ele;<br>
+    e o cordão de três dobras<br>não se quebra tão depressa."
+  </p>
+</section>
+
+<!-- MESSAGE -->
+<section class="message-section fade-up">
+  <span class="big-quote">"</span>
+  <p class="message-text">
+    Há vinte anos, dois corações se encontraram diante do altar
+    e prometeram amor eterno. Não foi apenas uma promessa entre vocês —
+    foi um pacto selado com a graça de Deus, escrito no livro da eternidade.
+    Cada rugação, cada riso, cada lágrima compartilhada foi
+    esculpida pelas mãos do Criador para contar a história mais bela:
+    a de um amor que persevera.
+  </p>
+  <div class="divider">✦</div>
+  <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--gold); opacity:.65; letter-spacing:.1em;">
+    "Não é o comprimento dos anos, mas a profundidade dos dias<br>que mede a riqueza de uma vida juntos."
+  </p>
+</section>
+
+<!-- VERSE 3 -->
+<section class="verse-section fade-up">
+  <p class="verse-label">Provérbios 18:22</p>
+  <p class="verse-text">
+    "Aquele que encontra uma esposa<br>
+    encontra algo excelente;<br>
+    recebe a favor do Senhor."
+  </p>
+</section>
+
+<!-- FINAL -->
+<section class="final-section fade-up">
+  <span class="gold-ornament">✦ ✦ ✦</span>
+  <h3 class="section-title">Parabéns, meu amor</h3>
+  <p class="signature">Rodrigo & Graciela</p>
+  <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--gold-light); opacity:.6; max-width:420px; margin:0 auto 2rem; line-height:1.9;">
+    "Eu te amo com amor eterno;<br>
+    por isso te atraí com bondade."<br>
+    <span style="font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.4em; opacity:.7;">Jeremias 31:3</span>
+  </p>
+  <span class="gold-ornament">✦ ✦ ✦</span>
+</section>
+
+<footer>03.06.2006 — 03.06.2026 · Bodas de Porcelana · Rodrigo & Graciela</footer>
+
+<script>
+// ── STARS ──
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2.5 + .5;
+  s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*4}s;animation-delay:${Math.random()*5}s`;
+  starsEl.appendChild(s);
+}
+
+// ── AUDIO ──
+const audio = document.getElementById('bg-audio');
+const btn = document.getElementById('audio-btn');
+let playing = false;
+function toggleAudio() {
+  if (playing) { audio.pause(); btn.textContent = '♪'; playing = false; }
+  else { audio.play().catch(() => {}); btn.textContent = '■'; playing = true; }
+}
+
+// ── COUNTER ──
+const wedding = new Date('2006-06-03T10:00:00');
+function updateCounter() {
+  const now = new Date();
+  const diff = now - wedding;
+  const secs = Math.floor(diff / 1000);
+  const mins = Math.floor(secs / 60);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
+  const months = Math.floor(days / 30.44);
+  const years = Math.floor(months / 12);
+  document.getElementById('c-anos').textContent = years;
+  document.getElementById('c-meses').textContent = months % 12;
+  document.getElementById('c-dias').textContent = days % 365;
+  document.getElementById('c-horas').textContent = hrs % 24;
+}
+updateCounter();
+setInterval(updateCounter, 60000);
+
+// ── TIMELINE ──
+const verses = [
+  '"O amor é a expressão mais plena da fé." — Gênesis 2:24',
+  '"Bendito és tu, Senhor, pois criaste o amor." — Salmos 100:5',
+  '"Crescemos juntos como árvores plantadas à beira do rio." — Salmos 1:3',
+  '"A fé que compartilhamos fortaleceu cada passo." — Hebreus 11:1',
+  '"Colhemos o que semeamos com amor." — Gálatas 6:7',
+  '"Cinco anos de graça e de cumplicidade." — Efésios 4:2',
+  '"O lar que construímos é reflexo da Sua presença." — Josué 24:15',
+  '"Sete anos e nossa aliança mais firme do que nunca." — Eclesiastes 4:12',
+  '"Crescemos em graça e em amor verdadeiro." — 2 Pedro 3:18',
+  '"Uma década: dez anos de histórias escritas por Deus." — Salmos 90:12',
+  '"Onze anos de amor que supera toda compreensão." — Filipenses 4:7',
+  '"Como flores que desabrocham a cada primavera." — Cantares 2:12',
+  '"Treze anos de fidelidade e de bênção." — Malaquias 2:14',
+  '"Nossa jornada iluminada pela luz d\'Ele." — Salmos 119:105',
+  '"Quinze anos: amor que não envelhece." — 1 Coríntios 13:8',
+  '"Dezesseis anos, um coração, uma voz." — Efésios 5:21',
+  '"Nosso amor é oração que sobe ao céu." — Salmos 141:2',
+  '"Dezoito anos provaram: o amor de Deus é eterno." — Romanos 8:39',
+  '"Dezenove anos de graça sobre graça." — João 1:16',
+  '"Vinte anos! Bodas de Porcelana: forte e belo." — Jeremias 29:11',
+];
+
+const years = Array.from({length:20}, (_,i) => 2006+i);
+const grid = document.getElementById('timeline-grid');
+
+years.forEach((yr, idx) => {
+  const card = document.createElement('div');
+  card.className = 'year-card';
+  const imgNum = idx + 1;
+  // Adjust this base URL to your actual GitHub raw content URL
+  const imgSrc = `https://raw.githubusercontent.com/vazrodrigo/wedding/main/img/${imgNum}.JPG`;
+  card.innerHTML = `
+    <img src="${imgSrc}" alt="${yr}" loading="lazy" onerror="this.parentElement.style.background='rgba(201,169,110,.08)'; this.style.display='none'">
+    <div class="year-card-overlay">
+      <div class="year-number">${yr}</div>
+      <div class="year-label">Ano ${idx+1}</div>
+      <div class="year-verse">${verses[idx]}</div>
+    </div>`;
+  card.addEventListener('click', () => openModal(imgSrc, yr));
+  grid.appendChild(card);
+});
+
+// ── MODAL ──
+function openModal(src, yr) {
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal-year').textContent = yr + ' — Ano ' + (yr - 2005);
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── FADE IN ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .15 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// ── ANIMATED COUNTER ──
+function animateCounter(id, target) {
+  let current = 0;
+  const step = Math.ceil(target / 60);
+  const interval = setInterval(() => {
+    current = Math.min(current + step, target);
+    document.getElementById(id).textContent = current;
+    if (current >= target) clearInterval(interval);
+  }, 25);
+}
+const counterObs = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) {
+    const now = new Date();
+    const diff = now - wedding;
+    const hrs = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    const months = Math.floor(days / 30.44);
+    const years = Math.floor(months / 12);
+    animateCounter('c-anos', years);
+    animateCounter('c-meses', months % 12);
+    animateCounter('c-dias', days % 365);
+    animateCounter('c-horas', hrs % 24);
+    counterObs.disconnect();
+  }
+}, { threshold: .3 });
+counterObs.observe(document.querySelector('.counter-section'));
+</script>
+</body>
+</html>
