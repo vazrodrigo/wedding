@@ -568,10 +568,10 @@
   <span class="big-quote">"</span>
   <p class="message-text">
     Há vinte anos, dois corações se encontraram diante do altar
-    e prometeram amor eterno. Não foi apenas uma promessa entre vocês —
+    e prometeram amor eterno. Não foi apenas uma promessa entre nós,
     foi um pacto selado com a graça de Deus, escrito no livro da eternidade.
-    Cada rugação, cada riso, cada lágrima compartilhada foi
-    esculpida pelas mãos do Criador para contar a história mais bela:
+    Cada riso e cada lágrima compartilhada foi
+    esculpida pelas mãos do Senhor para contar a história mais bela:
     a de um amor que persevera.
   </p>
   <div class="divider">✦</div>
@@ -626,21 +626,32 @@ function toggleAudio() {
 }
 
 // ── COUNTER ──
+
 const wedding = new Date('2006-06-03T10:00:00');
+
 function updateCounter() {
   const now = new Date();
   const diff = now - wedding;
-  const secs = Math.floor(diff / 1000);
-  const mins = Math.floor(secs / 60);
-  const hrs = Math.floor(mins / 60);
-  const days = Math.floor(hrs / 24);
-  const months = Math.floor(days / 30.44);
-  const years = Math.floor(months / 12);
+
+  // Conversões básicas de tempo total
+  const totalSecs = Math.floor(diff / 1000);
+  const totalMins = Math.floor(totalSecs / 60);
+  const totalHrs = Math.floor(totalMins / 60);
+  const totalDays = Math.floor(totalHrs / 24);
+
+  // Cálculo das unidades individuais (O "resto" do que sobra)
+  const years = Math.floor(totalDays / 365.25); // .25 para considerar anos bissextos
+  const months = Math.floor((totalDays % 365.25) / 30.44);
+  const days = Math.floor((totalDays % 365.25) % 30.44);
+  const hours = totalHrs % 24;
+
+  // Atualização do DOM
   document.getElementById('c-anos').textContent = years;
-  document.getElementById('c-meses').textContent = months % 12;
-  document.getElementById('c-dias').textContent = days % 365;
-  document.getElementById('c-horas').textContent = hrs % 24;
+  document.getElementById('c-meses').textContent = months;
+  document.getElementById('c-dias').textContent = days;
+  document.getElementById('c-horas').textContent = hours;
 }
+
 updateCounter();
 setInterval(updateCounter, 60000);
 
