@@ -716,9 +716,6 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
 // ── ANIMATED COUNTER ──
-updateCounter();
-setInterval(updateCounter, 60000);
- 
 function animateCounter(id, target) {
   let current = 0;
   const step = Math.ceil(target / 60);
