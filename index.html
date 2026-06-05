@@ -626,7 +626,6 @@ function toggleAudio() {
 }
 
 // ── COUNTER ──
-
 const wedding = new Date('2006-06-03T10:00:00');
 
 function updateCounter() {
@@ -717,6 +716,9 @@ const obs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
 // ── ANIMATED COUNTER ──
+updateCounter();
+setInterval(updateCounter, 60000);
+ 
 function animateCounter(id, target) {
   let current = 0;
   const step = Math.ceil(target / 60);
@@ -736,7 +738,7 @@ const counterObs = new IntersectionObserver(entries => {
     const years = Math.floor(months / 12);
     animateCounter('c-anos', years);
     animateCounter('c-meses', months % 12);
-    animateCounter('c-dias', days % 365);
+    animateCounter('c-dias', days % 365.25);
     animateCounter('c-horas', hrs % 24);
     counterObs.disconnect();
   }
